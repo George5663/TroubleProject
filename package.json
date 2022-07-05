@@ -1,0 +1,21 @@
+{
+  "name": "TroubleProject",
+  "version": "1.0.0",
+  "description": "Trouble project for UseVerb Interview",
+  "main": "Trouble.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node Trouble.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/George5663/TroubleProject.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/George5663/TroubleProject/issues"
+  },
+  "homepage": "https://github.com/George5663/TroubleProject#readme"
+}
