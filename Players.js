@@ -1,34 +1,55 @@
 //Posistion 0 on board is home
-const player1 = {
-    playerColour: Red,
+exports.player1 = {
+    playerColour: "Red",
     tokenOnePosistion: 0,
     tokenTwoPosistion: 0,
     tokenThreePosistion: 0,
     tokenFourPosistion: 0,
+    tokenOneSpacesMoved: 0,
+    tokenTwoSpacesMoved: 0,
+    tokenThreeSpacesMoved: 0,
+    tokenFourSpacesMoved: 0,
+    //The space you'd be once leaving home
+    outOfHomeSpace: 1
 };
 
-const player2 = {
-    playerColour: Green,
+exports.player2 = {
+    playerColour: "Green",
     tokenOnePosistion: 0,
     tokenTwoPosistion: 0,
     tokenThreePosistion: 0,
     tokenFourPosistion: 0,
+    tokenOneSpacesMoved: 0,
+    tokenTwoSpacesMoved: 0,
+    tokenThreeSpacesMoved: 0,
+    tokenFourSpacesMoved: 0,
+    outOfHomeSpace: 8
 };
 
-const player3 = {
-    playerColour: Blue,
+exports.player3 = {
+    playerColour: "Blue",
     tokenOnePosistion: 0,
     tokenTwoPosistion: 0,
     tokenThreePosistion: 0,
     tokenFourPosistion: 0,
+    tokenOneSpacesMoved: 0,
+    tokenTwoSpacesMoved: 0,
+    tokenThreeSpacesMoved: 0,
+    tokenFourSpacesMoved: 0,
+    outOfHomeSpace: 15
 };
 
-const player4 = {
-    playerColour: Yellow,
+exports.player4 = {
+    playerColour: "Yellow",
     tokenOnePosistion: 0,
     tokenTwoPosistion: 0,
     tokenThreePosistion: 0,
     tokenFourPosistion: 0,
+    tokenOneSpacesMoved: 0,
+    tokenTwoSpacesMoved: 0,
+    tokenThreeSpacesMoved: 0,
+    tokenFourSpacesMoved: 0,
+    outOfHomeSpace: 22
 };
 
 //Order of Play = Red -> Green -> Blue -> Yellow
