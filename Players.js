@@ -1,6 +1,6 @@
 //Posistion 0 on board is home
 exports.player1 = {
-    playerColour: "Red",
+    playerColour: "Green",
     tokenOnePosistion: 0,
     tokenTwoPosistion: 0,
     tokenThreePosistion: 0,
@@ -14,7 +14,7 @@ exports.player1 = {
 };
 
 exports.player2 = {
-    playerColour: "Green",
+    playerColour: "Red",
     tokenOnePosistion: 0,
     tokenTwoPosistion: 0,
     tokenThreePosistion: 0,
@@ -52,4 +52,4 @@ exports.player4 = {
     outOfHomeSpace: 22
 };
 
-//Order of Play = Red -> Green -> Blue -> Yellow
+//Order of Play = Green -> Red -> Blue -> Yellow
