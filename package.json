@@ -1,5 +1,5 @@
 {
-  "name": "TroubleProject",
+  "name": "@george5663/trouble",
   "version": "1.0.0",
   "description": "Trouble project for UseVerb Interview",
   "main": "Trouble.js",
@@ -18,4 +18,5 @@
     "url": "https://github.com/George5663/TroubleProject/issues"
   },
   "homepage": "https://github.com/George5663/TroubleProject#readme"
+  
 }
