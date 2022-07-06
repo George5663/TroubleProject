@@ -18,16 +18,16 @@ function RollDice(){
     return Math.floor(Math.random() * 6) + 1;
 }
 
-function fiftyFiftyChance()
-{
-    return random() % 1;
-}
-
 //Loop until game finishes
 while(gameOver == false)
 {
     //Each players turn
     for(const currentPlayer in players){
+        //Breaking out of turn cycle if game is over
+        if(gameOver == true)
+        {
+            break;
+        }
         var diceNumber = RollDice();
         console.log(players[currentPlayer].playerColour + " just rolled a " + diceNumber);
         if(diceNumber == 6)
@@ -37,52 +37,68 @@ while(gameOver == false)
                 //Move First token out if you roll a 6
                 players[currentPlayer].tokenOne.tokenOnePosistion = players[currentPlayer].outOfHomeSpace;
                 console.log(players[currentPlayer].tokenOne.name + " just moved out of home!!!");
-
                 checkIfInhabited(currentPlayer);
-
-                //Roll Again
-                diceNumber = RollDice();
-                console.log(players[currentPlayer].playerColour + " just rolled a " + diceNumber);
-            }
-        }
-
-        if(players[currentPlayer].tokenOne.tokenOnePosistion != 0){
-            if((players[currentPlayer].tokenOne.tokenOneSpacesMoved += diceNumber) == 28)
-            {
-                console.log("GAMES OVER!!!! " + players[currentPlayer].playerColour + " WON!!!!!");
-                gameOver = true;
-                break;
-            }
-            else if(players[currentPlayer].tokenOne.tokenOneSpacesMoved > 28)
-            {
-                console.log(players[currentPlayer].tokenOne.name + " just moved " + (players[currentPlayer].tokenOne.tokenOneSpacesMoved-28) + " over the finish, and thus stays put");
-                players[currentPlayer].tokenOne.tokenOneSpacesMoved -= diceNumber;
-                console.log("osjhoghohf current spaces moved = " + players[currentPlayer].tokenOne.tokenOneSpacesMoved)
             }
             else
             {
-                //Moving off space
-                spaces[players[currentPlayer].tokenOne.tokenOnePosistion].isInhabited = false;
-                spaces[players[currentPlayer].tokenOne.tokenOnePosistion].inhabitedBy = null;
-
-                //Going around the board
-                players[currentPlayer].tokenOne.tokenOnePosistion += diceNumber;
-
-                //Subtracting 28 so you can go around the entire board and start back at space 1
-                if(players[currentPlayer].tokenOne.tokenOnePosistion > 28)
-                {
-                    console.log('Retracting 28');
-                    players[currentPlayer].tokenOne.tokenOnePosistion -= 28;
-                }
-
-                //Current players moved token posistion
-                console.log(players[currentPlayer].tokenOne.name + " just moved to position: " + players[currentPlayer].tokenOne.tokenOnePosistion);
-
-                checkIfInhabited(currentPlayer);
-
-                spaces[players[currentPlayer].tokenOne.tokenOnePosistion].isInhabited = true;
-                spaces[players[currentPlayer].tokenOne.tokenOnePosistion].inhabitedBy = players[currentPlayer].tokenOne;
+                movePiece(currentPlayer, diceNumber);
             }
+            //Roll Again
+            while(diceNumber == 6)
+            {
+                if(gameOver == false)
+                {
+                    console.log(players[currentPlayer].playerColour + " gets to roll again since he rolled a 6!");
+                    diceNumber = RollDice();
+                    console.log(players[currentPlayer].playerColour + " just rolled a " + diceNumber);
+                    movePiece(currentPlayer, diceNumber);
+                }
+            }
+            
+        }
+        else
+        {
+            movePiece(currentPlayer, diceNumber);
+        }
+    }
+}
+
+function movePiece(currentPlayer, diceNumber)
+{
+    if(players[currentPlayer].tokenOne.tokenOnePosistion != 0){
+        if((players[currentPlayer].tokenOne.tokenOneSpacesMoved += diceNumber) == 28)
+        {
+            console.log("GAMES OVER!!!! " + players[currentPlayer].playerColour + " WON!!!!!");
+            gameOver = true;
+        }
+        else if(players[currentPlayer].tokenOne.tokenOneSpacesMoved > 28)
+        {
+            console.log(players[currentPlayer].tokenOne.name + " just rolled " + (players[currentPlayer].tokenOne.tokenOneSpacesMoved-28) + " over the finish, and thus stays put");
+            players[currentPlayer].tokenOne.tokenOneSpacesMoved -= diceNumber;
+        }
+        else
+        {
+            //Moving off space
+            spaces[players[currentPlayer].tokenOne.tokenOnePosistion].isInhabited = false;
+            spaces[players[currentPlayer].tokenOne.tokenOnePosistion].inhabitedBy = null;
+
+            //Going around the board
+            players[currentPlayer].tokenOne.tokenOnePosistion += diceNumber;
+
+            //Subtracting 28 so you can go around the entire board and start back at space 1
+            if(players[currentPlayer].tokenOne.tokenOnePosistion > 28)
+            {
+                console.log('Retracting 28');
+                players[currentPlayer].tokenOne.tokenOnePosistion -= 28;
+            }
+
+            //Current players moved token posistion
+            console.log(players[currentPlayer].tokenOne.name + " just moved to position: " + players[currentPlayer].tokenOne.tokenOnePosistion);
+
+            checkIfInhabited(currentPlayer);
+
+            spaces[players[currentPlayer].tokenOne.tokenOnePosistion].isInhabited = true;
+            spaces[players[currentPlayer].tokenOne.tokenOnePosistion].inhabitedBy = players[currentPlayer].tokenOne;
         }
     }
 }
