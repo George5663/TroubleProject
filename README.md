@@ -1,9 +1,13 @@
 # TroubleProject
 Motivation: Trouble project for UseVerb Interview<br />
+
 All installations (assuming you already have nodejs): 'npm install prompt-sync'<br />
-How to Run: Simply type 'npm start' and select option 1 or 2, and select 3 to exit
+
+How to Run: Simply type 'npm start' and select option 1 or 2, and select 3 to exit<br />
+
 Challenges: Getting the program to work when each player had only one token and creating the objects was simple, the challenge was getting
-all 16 tokens running at once, and figuring out the logic behind that.
+all 16 tokens running at once, and figuring out the logic behind that.<br />
+
 Example Run:
 Green just rolled a 5
 Red just rolled a 1
