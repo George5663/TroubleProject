@@ -41,6 +41,7 @@ function RollDice(){
     return Math.floor(Math.random() * 6) + 1;
 }
 var quit = false;
+var numRounds = 0;
 const prompt = require('prompt-sync')({sigint: true});
 while(quit != true)
 {
@@ -50,7 +51,7 @@ while(quit != true)
     if(input == 1)
     {
         gameOver = false;
-        //var i = 0;
+        
         //Loop until game finishes
         while(gameOver == false)
         {
@@ -77,11 +78,8 @@ while(quit != true)
                     }
                 }
             }
-            //i++
-            //if(i == 30)
-            //{
-            //    gameOver = true;
-            //}
+            //+1 round after all 4 players had 1 turn
+            numRounds++
         }
     }
     else if(input == 2)
@@ -196,6 +194,8 @@ function movePiece(legalToken, diceNumber, currentPlayer)
                     {
                         console.log("Game Over," + finishSpaces[colours][0] + " WINS!!!!");
                         currentPlayer.wins++;
+                        console.log("Total Wins: " + currentPlayer.wins);
+                        console.log("Total Rounds in that game: " + numRounds);
                         gameOver = true;
                         break;
                     }
