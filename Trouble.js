@@ -36,53 +36,79 @@ var finishSpaces =  [
     blueFinishSpaces,
     yellowFinishSpaces
 ]
-
 let gameOver = false;
-
 function RollDice(){
     return Math.floor(Math.random() * 6) + 1;
 }
-var i = 0;
-//Loop until game finishes
-while(gameOver == false)
+var quit = false;
+const prompt = require('prompt-sync')({sigint: true});
+while(quit != true)
 {
-    
-    //Each players turn
-    for(const currentPlayer in players){
-        //Breaking out of turn cycle if game is over
-        if(gameOver == true)
+    console.log("What do you want to do?\n1. Play Game\n2. View Players\n3. Quit");
+    let input = prompt("> ");
+    input = Number(input);
+    if(input == 1)
+    {
+        gameOver = false;
+        //var i = 0;
+        //Loop until game finishes
+        while(gameOver == false)
         {
-            break;
-        }
-        var diceNumber = RollDice();
-        takeTurn(diceNumber, currentPlayer);
-        if(diceNumber == 6)
-        {
-            while(diceNumber == 6)
-            {
+            
+            //Each players turn
+            for(const currentPlayer in players){
+                //Breaking out of turn cycle if game is over
                 if(gameOver == true)
                 {
                     break;
                 }
-                diceNumber = RollDice();
+                var diceNumber = RollDice();
                 takeTurn(diceNumber, currentPlayer);
+                if(diceNumber == 6)
+                {
+                    while(diceNumber == 6)
+                    {
+                        if(gameOver == true)
+                        {
+                            break;
+                        }
+                        diceNumber = RollDice();
+                        takeTurn(diceNumber, currentPlayer);
+                    }
+                }
             }
+            //i++
+            //if(i == 30)
+            //{
+            //    gameOver = true;
+            //}
         }
     }
-    i++
-    // if(i == 30)
-    // {
-    //     gameOver = true;
-    // }
+    else if(input == 2)
+    {
+        for(const currentPlayer in players)
+        {
+            console.log("Player: " + players[currentPlayer].playerColour);
+            console.log("Total Wins: " + players[currentPlayer].wins);
+        }
+    }
+    else if(input == 3)
+    {
+        quit = true;
+    }
+    else
+    {
+        console.log("Please input either 1,2 or 3"); 
+    }
 }
 
 function takeTurn(diceNumber, currentPlayer)
 {
     console.log(players[currentPlayer].playerColour + " just rolled a " + diceNumber);
-
+    
     //Get all legal moves with dice roll
     var legalTokens = checkLegality(diceNumber, players[currentPlayer]);
-    console.log(legalTokens);
+    //console.log(legalTokens);
     if(legalTokens.length != 0)
     {
         //Move a random legal piece
@@ -109,7 +135,7 @@ function checkLegality(diceNumber, currentPlayer)
             //If the token is at home, and there isnt a current player token on the out of home space
             if(diceNumber == 6 && currentPlayer.allTokens[i].position == 0 && currentPlayer.allTokens.includes(spaces[currentPlayer.outOfHomeSpace].inhabitedBy) == false)
             {
-                console.log("home")
+                //console.log("home")
                 legalTokens.push(currentPlayer.allTokens[i]); 
             }
             //If you're coming up to the finish spaces
@@ -122,7 +148,7 @@ function checkLegality(diceNumber, currentPlayer)
                     {
                         if(finishSpaces[colours][(currentPlayer.allTokens[i].spacesMoved + diceNumber) - 27].isInhabited == false)
                         {
-                            console.log("finish")
+                            //console.log("finish")
                             legalTokens.push(currentPlayer.allTokens[i]);
                         }
                     }
@@ -131,7 +157,7 @@ function checkLegality(diceNumber, currentPlayer)
             //If the space x moves ahead is not inhabited by a current players token and you're not moving off the board
             else if(currentPlayer.allTokens[i].position != 0 && currentPlayer.allTokens.includes(spaces[(tempPosition)].inhabitedBy) == false && currentPlayer.allTokens[i].spacesMoved + diceNumber < 32)
             {
-                console.log("unoccupied")
+                //console.log("unoccupied")
                 legalTokens.push(currentPlayer.allTokens[i]);
             }
         }
@@ -145,7 +171,7 @@ function movePiece(legalToken, diceNumber, currentPlayer)
         //Moving off space
         spaces[legalToken.position].isInhabited = false;
         spaces[legalToken.position].inhabitedBy = null;
-
+        
         //If you've entered the finish slot
         if((legalToken.spacesMoved += diceNumber) > 27)
         {
@@ -155,7 +181,7 @@ function movePiece(legalToken, diceNumber, currentPlayer)
                 {
                     finishSpaces[colours][legalToken.spacesMoved-27].isInhabited = true;
                     finishSpaces[colours][legalToken.spacesMoved-27].inhabitedBy = legalToken;
-                    console.log(legalToken.name + "just moved into final space: " + (legalToken.spacesMoved-27));
+                    console.log(legalToken.name + " just moved into final space: " + (legalToken.spacesMoved-27));
                     //Checking if game is over
                     let result = true;
                     for(var i = 1; i < 5; i++)
@@ -165,11 +191,12 @@ function movePiece(legalToken, diceNumber, currentPlayer)
                             result = false;
                         }
                     }
-
+                    
                     if(result == true)
                     {
-                        console.log("Game Over," + finishSpaces[colours][0] + " WINS!!!!")
-                        gameOver = true
+                        console.log("Game Over," + finishSpaces[colours][0] + " WINS!!!!");
+                        currentPlayer.wins++;
+                        gameOver = true;
                         break;
                     }
                 }
@@ -179,19 +206,19 @@ function movePiece(legalToken, diceNumber, currentPlayer)
         {
             //Going around the board
             legalToken.position += diceNumber;
-
+            
             //Subtracting 28 so you can go around the entire board and start back at space 1
             if(legalToken.position > 28)
             {
-                console.log('Retracting 28');
+                //console.log('Retracting 28');
                 legalToken.position -= 28;
             }
             
             //Current players moved token position
             console.log(legalToken.name + " just moved to position: " + legalToken.position);
-
+            
             checkIfInhabited(legalToken);
-
+            
             spaces[legalToken.position].isInhabited = true;
             spaces[legalToken.position].inhabitedBy = legalToken;
         }

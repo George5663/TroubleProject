@@ -17,6 +17,8 @@
   "bugs": {
     "url": "https://github.com/George5663/TroubleProject/issues"
   },
-  "homepage": "https://github.com/George5663/TroubleProject#readme"
-  
+  "homepage": "https://github.com/George5663/TroubleProject#readme",
+  "dependencies": {
+    "prompt-sync": "^4.2.0"
+  }
 }
