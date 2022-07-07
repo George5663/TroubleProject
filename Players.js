@@ -7,7 +7,7 @@ exports.player1 = {
     { name: "Greens Token Three", position: 0, spacesMoved: 0},
     { name: "Greens Token Four", position: 0, spacesMoved: 0}],
     //The space you'd be once leaving home
-    outOfHomeSpace: 1,
+    outOfHomeSpace: 1
 };
 
 exports.player2 = {
@@ -17,7 +17,7 @@ exports.player2 = {
         { name: "Reds Token Two", position: 0, spacesMoved: 0},
         { name: "Reds Token Three", position: 0, spacesMoved: 0},
         { name: "Reds Token Four", position: 0, spacesMoved: 0}],
-    outOfHomeSpace: 8,
+    outOfHomeSpace: 8
 };
 
 exports.player3 = {
@@ -27,7 +27,7 @@ exports.player3 = {
         { name: "Blues Token Two", position: 0, spacesMoved: 0},
         { name: "Blues Token Three", position: 0, spacesMoved: 0},
         { name: "Blues Token Four", position: 0, spacesMoved: 0}],
-    outOfHomeSpace: 15,
+    outOfHomeSpace: 15
 };
 
 exports.player4 = {
@@ -37,7 +37,7 @@ exports.player4 = {
         { name: "Yellows Token Two", position: 0, spacesMoved: 0},
         { name: "Yellows Token Three", position: 0, spacesMoved: 0},
         { name: "Yellows Token Four", position: 0, spacesMoved: 0}],
-    outOfHomeSpace: 22,
+    outOfHomeSpace: 22
 };
 
 //Order of Play = Green -> Red -> Blue -> Yellow
