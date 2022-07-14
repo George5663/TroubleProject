@@ -17,6 +17,7 @@ var greenFinishSpaces = new Array(5);
 var redFinishSpaces = new Array(5);
 var blueFinishSpaces = new Array(5);
 var yellowFinishSpaces = new Array(5);
+
 for(var i = 0; i < 5; i++)
 {
     blueFinishSpaces[i] = new boardSpaces(false, null);
@@ -36,67 +37,40 @@ var finishSpaces =  [
     blueFinishSpaces,
     yellowFinishSpaces
 ]
+
 let gameOver = false;
+
 function RollDice(){
     return Math.floor(Math.random() * 6) + 1;
 }
-var quit = false;
-var numRounds = 0;
-const prompt = require('prompt-sync')({sigint: true});
-while(quit != true)
+
+gameOver = false;
+
+//Loop until game finishes
+while(gameOver == false)
 {
-    console.log("What do you want to do?\n1. Play Game\n2. View Players\n3. Quit");
-    let input = prompt("> ");
-    input = Number(input);
-    if(input == 1)
-    {
-        gameOver = false;
-        
-        //Loop until game finishes
-        while(gameOver == false)
+    
+    //Each players turn
+    for(const currentPlayer in players){
+        //Breaking out of turn cycle if game is over
+        if(gameOver == true)
         {
-            
-            //Each players turn
-            for(const currentPlayer in players){
-                //Breaking out of turn cycle if game is over
+            break;
+        }
+        var diceNumber = RollDice();
+        takeTurn(diceNumber, currentPlayer);
+        if(diceNumber == 6)
+        {
+            while(diceNumber == 6)
+            {
                 if(gameOver == true)
                 {
                     break;
                 }
-                var diceNumber = RollDice();
+                diceNumber = RollDice();
                 takeTurn(diceNumber, currentPlayer);
-                if(diceNumber == 6)
-                {
-                    while(diceNumber == 6)
-                    {
-                        if(gameOver == true)
-                        {
-                            break;
-                        }
-                        diceNumber = RollDice();
-                        takeTurn(diceNumber, currentPlayer);
-                    }
-                }
             }
-            //+1 round after all 4 players had 1 turn
-            numRounds++
         }
-    }
-    else if(input == 2)
-    {
-        for(const currentPlayer in players)
-        {
-            console.log("Player: " + players[currentPlayer].playerColour);
-            console.log("Total Wins: " + players[currentPlayer].wins);
-        }
-    }
-    else if(input == 3)
-    {
-        quit = true;
-    }
-    else
-    {
-        console.log("Please input either 1,2 or 3"); 
     }
 }
 
@@ -193,9 +167,6 @@ function movePiece(legalToken, diceNumber, currentPlayer)
                     if(result == true)
                     {
                         console.log("Game Over," + finishSpaces[colours][0] + " WINS!!!!");
-                        currentPlayer.wins++;
-                        console.log("Total Wins: " + currentPlayer.wins);
-                        console.log("Total Rounds in that game: " + numRounds);
                         gameOver = true;
                         break;
                     }
